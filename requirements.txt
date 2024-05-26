@@ -1,3 +1,10 @@
 uagents
 serpapi
 streamlit
+pandasai
+langchain_community
+langchain
+datasets
+python-dotenv
+seaborn
+ipywidgets
