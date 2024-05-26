@@ -23,9 +23,7 @@ def get_ticker(query: str):
     if ndq.score>nse.score:
         return ndq.payload["Symbol"]+":NASDAQ"
     else:
-        return nse.payload["SYMBOL"]+":NSE"
-    
-    
+        return nse.payload["SYMBOL"]+":NSE"    
 
 def get_stock_summary(ticker: str):
     params = {
@@ -40,22 +38,18 @@ def get_stock_summary(ticker: str):
     return results['summary']
 
 def get_stock(query: str):
-    """Get stock summary from query."""
+    """Get stock summary from stock name."""
     ticker = get_ticker(query)
     summary = get_stock_summary(ticker)
     return summary
 
-# GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY')
-genai.configure(api_key='AIzaSyDap6T0UIajYoMUXLjlcb7yf0_4EDD27Xs')
-model = genai.GenerativeModel( model_name='gemini-1.5-flash',
-                               tools=[get_stock] )
-
 if __name__ == '__main__':
+    # GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY')
+    genai.configure(api_key='AIzaSyDap6T0UIajYoMUXLjlcb7yf0_4EDD27Xs')
+    model = genai.GenerativeModel( model_name='gemini-1.5-flash',
+                                tools=[get_stock] )
+    
     input = "what is the stock price of Punjab National Bank?"
-    # ticker = get_ticker(input)
-    # print(ticker)
-    # stock = get_stock(ticker)
-    # print(stock)
 
     chat = model.start_chat(enable_automatic_function_calling=True)
     response = chat.send_message(input)
