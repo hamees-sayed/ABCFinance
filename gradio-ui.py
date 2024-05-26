@@ -20,4 +20,14 @@ def stock_agent(query, history):
     response = chat.send_message(query)
     return response.text
 
-gr.ChatInterface(stock_agent).launch()
+gr.ChatInterface(
+    stock_agent, 
+    title="Stock Bro",
+    description="Your personal stock assistant!",
+    textbox=gr.Textbox(placeholder="Ask me anything about stocks!", container=False, scale=7),
+    examples=["Is NVIDIA going up?", "What is the stock price of Apple?"],
+    cache_examples=False,
+    retry_btn=None,
+    undo_btn=None,
+    theme=gr.themes.Default(),
+    ).launch()

@@ -35,12 +35,14 @@ def get_stock_summary(ticker: str):
 
     search = GoogleSearch(params)
     results = search.get_dict()
-    return results['summary']
+    return results
 
 def get_stock(query: str):
     """Get stock summary from stock name."""
+    print("Agent called with query:", query)
     ticker = get_ticker(query)
     summary = get_stock_summary(ticker)
+    print("Returning summary:", summary)
     return summary
 
 if __name__ == '__main__':
