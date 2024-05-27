@@ -2,9 +2,13 @@ uagents
 serpapi
 streamlit
 pandasai
-langchain_community
+langchain-community
 langchain
 datasets
 python-dotenv
 seaborn
 ipywidgets
+google-generativeai 
+langchain-google-genai
+sentence-transformers
+qdrant-client
