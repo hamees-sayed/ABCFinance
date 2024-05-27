@@ -36,40 +36,40 @@ def get_context(query: str):
     
     return context, sources
 
-def generate_response(query: str):
-    docs, sources = get_context(query)
-    prompt_template = """
-    As a friendly and informative financial assistant, your task is to provide a clear and comprehensive answer to the following question. 
-    Use the provided context to derive your answer, ensuring all information comes directly from the context. Break down complex financial 
-    concepts into easy-to-understand language, using analogies and relatable examples whenever possible. Focus on educating users and 
-    empowering them to make informed financial decisions in a conversational style. Please provide detailed steps, 
-    explanations, and examples where applicable to ensure the answer is thorough and informative.
-    \n\n
-    Context:\n {context}?\n
-    Question: \n{question}\n
-    Answer:
-    """
-    prompt = PromptTemplate(template=prompt_template, input_variables=["context", "question"])
-    llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash", temperature=0.2, google_api_key="AIzaSyArmteboc6fSdKz9tF_fbuCfKYhKy-8hMk")
-    chain = LLMChain(llm=llm, prompt=prompt)
-    context_data = {
-        "context": docs,
-        "question": query
-    }
-    response = chain.invoke(context_data)
-    reference_links = ", ".join([f"[{key}]({value})" for key, value in sources.items()])
+# def generate_response(query: str):
+#     docs, sources = get_context(query)
+#     prompt_template = """
+#     You are Finance Bro a friendly and informative financial assistant, your task is to provide a clear and comprehensive answer to the following question. 
+#     Use the provided context to derive your answer, ensuring all information comes directly from the context. Break down complex financial 
+#     concepts into easy-to-understand language, using analogies and relatable examples whenever possible. Focus on educating users and 
+#     empowering them to make informed financial decisions in a conversational style. Please provide detailed steps, 
+#     explanations, and examples where applicable to ensure the answer is thorough and informative.
+#     \n\n
+#     Context:\n {context}?\n
+#     Question: \n{question}\n
+#     Answer:
+#     """
+#     prompt = PromptTemplate(template=prompt_template, input_variables=["context", "question"])
+#     llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash", temperature=0.2, google_api_key="AIzaSyArmteboc6fSdKz9tF_fbuCfKYhKy-8hMk")
+#     chain = LLMChain(llm=llm, prompt=prompt)
+#     context_data = {
+#         "context": docs,
+#         "question": query
+#     }
+#     response = chain.invoke(context_data)
+#     reference_links = ", ".join([f"[{key}]({value})" for key, value in sources.items()])
     
-    answer = f"{response["text"]}\n\n{reference_links}"
-    return answer
+#     answer = f"{response['text']}\n\n{reference_links}"
+#     return answer
 
-st.title('Investopedia Agent')
+# st.title('Investopedia Agent')
 
-prompt = st.text_area('Ask me questions about the data')
-if st.button('Generate'):
-    if prompt:
-        with st.spinner('Thinking...'):
-            response = generate_response(prompt)
-            if response != "/workspaces/ABCFinance/exports/charts/temp_chart.png":
-                st.write(response)
-    else:
-        st.warning('Please enter a prompt')
+# prompt = st.text_area('Ask me questions about the data')
+# if st.button('Generate'):
+#     if prompt:
+#         with st.spinner('Thinking...'):
+#             response = generate_response(prompt)
+#             if response != "/workspaces/ABCFinance/exports/charts/temp_chart.png":
+#                 st.write(response)
+#     else:
+#         st.warning('Please enter a prompt')
