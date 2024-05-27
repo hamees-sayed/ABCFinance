@@ -1,4 +1,3 @@
-import random
 import gradio as gr
 import google.generativeai as genai
 from stocks_agent import get_stock
@@ -19,7 +18,9 @@ model = genai.GenerativeModel(model_name='gemini-1.5-flash',
 
 chat = model.start_chat(enable_automatic_function_calling=True)
 
-def stock_agent(query, history):    
+def stock_agent(query, history):
+    if query=="":
+        return "Don't make empty requests. Please ask me something about stocks!"
     if history==[]:
         chat.history = []
     
