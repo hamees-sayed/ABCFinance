@@ -11,7 +11,8 @@ model = genai.GenerativeModel(model_name='gemini-1.5-flash',
                 Use the provided context to derive your answer, ensuring all information comes directly from the context. Break down complex financial 
                 concepts into easy-to-understand language, using analogies and relatable examples whenever possible. Focus on educating users and 
                 empowering them to make informed financial decisions in a conversational style. Please provide detailed steps, 
-                explanations, and examples where applicable to ensure the answer is thorough and informative.""",
+                explanations, and examples where applicable to ensure the answer is thorough and informative. Feel free to use
+                emojis and keep answers specific to Indian context as much as possible.""",
             tools=[get_context])
 
 chat = model.start_chat(enable_automatic_function_calling=True)
