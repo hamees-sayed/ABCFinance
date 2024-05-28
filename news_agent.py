@@ -13,7 +13,7 @@ yesterday = today - timedelta(days=1)
 yesterday_date = yesterday.date().isoformat()
 today_date = today.date().isoformat()
 
-def generate_news(query="finance india"):
+def generate_news(query="stock trends in india"):
     url = "https://newsapi.org/v2/everything?"
     params = {
         "q": query,
@@ -28,7 +28,6 @@ def generate_news(query="finance india"):
 
     filtered_articles = []
     for article in articles:
-        # Check if required fields are not null
         if article.get('content') and article.get('urlToImage') and article.get('title'):
             filtered_articles.append(article)
 
@@ -38,7 +37,7 @@ def generate_news(query="finance india"):
 
 def summarise_news(content: str):
     prompt_template = """
-    You are a news reporter, in 150 words, summarize the following news article, focusing on the most important points:
+    You are a news reporter, in 150 words, summarize the following news article, focusing on the most important points and use emojis if required to keep it engaging.:
     \n\n
     Article:\n {article}\n\n
 
@@ -47,7 +46,7 @@ def summarise_news(content: str):
     Impact: Analyze the article's main idea and supporting arguments to provide insights into the topic. Identify any implications or consequences of the article's findings or arguments.
     Quotes: Incorporate relevant quotes from the article that support the main idea or add depth to the summary. Ensure quotes are accurately attributed to the correct individuals.
     Insights: Offer an analysis of what this news means in simpler terms.
-    Omit unnecessary information and jargon. Strive for a clear, logical, concise, and objective summary that is easy to understand. Use emojis if required to keep it engaging.
+    Omit unnecessary information and jargon. Strive for a clear, logical, concise, and objective summary that is easy to understand.
     \n
     Summary:
     """

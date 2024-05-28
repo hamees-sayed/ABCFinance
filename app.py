@@ -78,7 +78,7 @@ def data_analysis_agent():
 def news_agent():
     st.title('News Agent')
 
-    prompt = st.text_area('Latest news on financial topics', value="Finance India")
+    prompt = st.text_area("Latest news on financial topics, e.g 'Stock Trends', 'Finance News'", value="Finance India")
     if st.button('Generate'):
         if prompt:
             with st.spinner('Thinking...'):
