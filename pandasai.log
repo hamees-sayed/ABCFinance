@@ -1,0 +1,898 @@
+2024-05-27 18:49:59 [INFO] Question: Generate a heatmap for the Titanic dataset to visualize the correlation between numerical features
+2024-05-27 18:49:59 [INFO] Running PandasAI with google-gemini LLM...
+2024-05-27 18:49:59 [INFO] Prompt ID: e163dcc4-700b-4103-b3f2-47d210f15f3f
+2024-05-27 18:49:59 [INFO] Executing Pipeline: GenerateChatPipeline
+2024-05-27 18:49:59 [INFO] Executing Step 0: ValidatePipelineInput
+2024-05-27 18:49:59 [INFO] Executing Step 1: CacheLookup
+2024-05-27 18:49:59 [INFO] Executing Step 2: PromptGeneration
+2024-05-27 18:49:59 [INFO] Using prompt: <dataframe>
+dfs[0]:891x12
+PassengerId,Survived,Pclass,Name,Sex,Age,SibSp,Parch,Ticket,Fare,Cabin,Embarked
+321,0,3,"Turpin, Mr. William John Robert",male,65.0,2,3,349224,8.5167,,Q
+875,1,2,"Ivanoff, Mr. Kanio",male,40.0,5,6,Fa 265302,28.7125,E77,S
+211,1,1,"Trout, Mrs. William H (Jessie L)",female,,1,0,PC 17572,32.3208,B49,
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: 
+type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+
+```
+
+
+
+### QUERY
+ Generate a heatmap for the Titanic dataset to visualize the correlation between numerical features
+
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+If you are asked to plot a chart, use "matplotlib" for charts, save as png.
+
+
+Generate python code and return full updated code:
+2024-05-27 18:49:59 [INFO] Executing Step 3: CodeGenerator
+2024-05-27 18:50:03 [INFO] Prompt used:
+            
+<dataframe>
+dfs[0]:891x12
+PassengerId,Survived,Pclass,Name,Sex,Age,SibSp,Parch,Ticket,Fare,Cabin,Embarked
+321,0,3,"Turpin, Mr. William John Robert",male,65.0,2,3,349224,8.5167,,Q
+875,1,2,"Ivanoff, Mr. Kanio",male,40.0,5,6,Fa 265302,28.7125,E77,S
+211,1,1,"Trout, Mrs. William H (Jessie L)",female,,1,0,PC 17572,32.3208,B49,
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: 
+type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+
+```
+
+
+
+### QUERY
+ Generate a heatmap for the Titanic dataset to visualize the correlation between numerical features
+
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+If you are asked to plot a chart, use "matplotlib" for charts, save as png.
+
+
+Generate python code and return full updated code:
+            
+2024-05-27 18:50:03 [INFO] Code generated:
+            ```
+            import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Write code here
+
+# Generate a heatmap for the Titanic dataset to visualize the correlation between numerical features
+corr = dfs[0].select_dtypes(include=[np.number]).corr()
+heatmap = sns.heatmap(corr, annot=True, cmap='RdYlGn')
+plt.title('Correlation Heatmap')
+plt.savefig('heatmap.png')
+
+# Declare result var: 
+result = { "type": "plot", "value": "heatmap.png" }
+            ```
+            
+2024-05-27 18:50:03 [INFO] Executing Step 4: CachePopulation
+2024-05-27 18:50:03 [INFO] Executing Step 5: CodeCleaning
+2024-05-27 18:50:03 [INFO] Saving charts to /workspaces/ABCFinance/exports/charts/temp_chart.png
+2024-05-27 18:50:04 [INFO] 
+Code running:
+```
+corr = dfs[0].select_dtypes(include=[np.number]).corr()
+heatmap = sns.heatmap(corr, annot=True, cmap='RdYlGn')
+plt.title('Correlation Heatmap')
+plt.savefig('/workspaces/ABCFinance/exports/charts/temp_chart.png')
+result = {'type': 'plot', 'value': '/workspaces/ABCFinance/exports/charts/temp_chart.png'}
+        ```
+2024-05-27 18:50:04 [INFO] Executing Step 6: CodeExecution
+2024-05-27 18:50:04 [INFO] Executing Step 7: ResultValidation
+2024-05-27 18:50:04 [INFO] Answer: {'type': 'plot', 'value': '/workspaces/ABCFinance/exports/charts/temp_chart.png'}
+2024-05-27 18:50:04 [INFO] Executing Step 8: ResultParsing
+2024-05-28 05:53:38 [INFO] Question: plot tesla close with date
+
+2024-05-28 05:53:38 [INFO] Running PandasAI with google-gemini LLM...
+2024-05-28 05:53:38 [INFO] Prompt ID: a3533df3-10c7-4b48-8db9-3d410bdd5b4c
+2024-05-28 05:53:38 [INFO] Executing Pipeline: GenerateChatPipeline
+2024-05-28 05:53:38 [INFO] Executing Step 0: ValidatePipelineInput
+2024-05-28 05:53:38 [INFO] Executing Step 1: CacheLookup
+2024-05-28 05:53:38 [INFO] Executing Step 2: PromptGeneration
+2024-05-28 05:53:38 [INFO] Using prompt: <dataframe>
+dfs[0]:2956x7
+Date,Open,High,Low,Close,Adj Close,Volume
+2020-09-10,5.538,53.099998,60.006001,36.785999,41.993999,34093500
+2021-04-21,42.327999,47.540001,70.152,38.860001,62.612,29437000
+2015-12-11,687.98999,69.431999,3.952,49.998001,274.877991,61026500
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: 
+type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+
+```
+
+
+
+### QUERY
+ plot tesla close with date
+
+
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+If you are asked to plot a chart, use "matplotlib" for charts, save as png.
+
+
+Generate python code and return full updated code:
+2024-05-28 05:53:38 [INFO] Executing Step 3: CodeGenerator
+2024-05-28 05:53:42 [INFO] Prompt used:
+            
+<dataframe>
+dfs[0]:2956x7
+Date,Open,High,Low,Close,Adj Close,Volume
+2020-09-10,5.538,53.099998,60.006001,36.785999,41.993999,34093500
+2021-04-21,42.327999,47.540001,70.152,38.860001,62.612,29437000
+2015-12-11,687.98999,69.431999,3.952,49.998001,274.877991,61026500
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: 
+type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+
+```
+
+
+
+### QUERY
+ plot tesla close with date
+
+
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+If you are asked to plot a chart, use "matplotlib" for charts, save as png.
+
+
+Generate python code and return full updated code:
+            
+2024-05-28 05:53:42 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Write code here
+tesla = dfs[0]
+tesla_close = tesla['Close']
+tesla_close.plot()
+plt.xlabel('Date')
+plt.ylabel('Close Price')
+plt.title('Tesla Close Price Over Time')
+plt.savefig('tesla_close.png')
+
+# Declare result var: 
+result = { "type": "plot", "value": "tesla_close.png" }
+            ```
+            
+2024-05-28 05:53:42 [INFO] Executing Step 4: CachePopulation
+2024-05-28 05:53:42 [INFO] Executing Step 5: CodeCleaning
+2024-05-28 05:53:42 [INFO] Saving charts to /workspaces/ABCFinance/exports/charts/temp_chart.png
+2024-05-28 05:53:42 [INFO] 
+Code running:
+```
+tesla = dfs[0]
+tesla_close = tesla['Close']
+tesla_close.plot()
+plt.xlabel('Date')
+plt.ylabel('Close Price')
+plt.title('Tesla Close Price Over Time')
+plt.savefig('/workspaces/ABCFinance/exports/charts/temp_chart.png')
+result = {'type': 'plot', 'value': '/workspaces/ABCFinance/exports/charts/temp_chart.png'}
+        ```
+2024-05-28 05:53:42 [INFO] Executing Step 6: CodeExecution
+2024-05-28 05:53:42 [INFO] Executing Step 7: ResultValidation
+2024-05-28 05:53:42 [INFO] Answer: {'type': 'plot', 'value': '/workspaces/ABCFinance/exports/charts/temp_chart.png'}
+2024-05-28 05:53:42 [INFO] Executing Step 8: ResultParsing
+2024-05-28 05:54:29 [INFO] Question: plot tesla close price on y axis and date on x axis
+2024-05-28 05:54:29 [INFO] Running PandasAI with google-gemini LLM...
+2024-05-28 05:54:29 [INFO] Prompt ID: 544fea97-8fa6-412a-b4d6-eb38c8219498
+2024-05-28 05:54:29 [INFO] Executing Pipeline: GenerateChatPipeline
+2024-05-28 05:54:29 [INFO] Executing Step 0: ValidatePipelineInput
+2024-05-28 05:54:29 [INFO] Executing Step 1: CacheLookup
+2024-05-28 05:54:29 [INFO] Executing Step 2: PromptGeneration
+2024-05-28 05:54:29 [INFO] Using prompt: <dataframe>
+dfs[0]:2956x7
+Date,Open,High,Low,Close,Adj Close,Volume
+2015-03-04,69.001999,152.399994,50.102001,5.67,39.82,4154000
+2021-12-31,40.501999,41.458,39.91,44.512001,7.0,23559000
+2019-03-05,71.0,6.74,70.737999,70.694,9.09,72430000
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: 
+type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+
+```
+
+
+
+### QUERY
+ plot tesla close price on y axis and date on x axis
+
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+If you are asked to plot a chart, use "matplotlib" for charts, save as png.
+
+
+Generate python code and return full updated code:
+2024-05-28 05:54:29 [INFO] Executing Step 3: CodeGenerator
+2024-05-28 05:54:32 [INFO] Prompt used:
+            
+<dataframe>
+dfs[0]:2956x7
+Date,Open,High,Low,Close,Adj Close,Volume
+2015-03-04,69.001999,152.399994,50.102001,5.67,39.82,4154000
+2021-12-31,40.501999,41.458,39.91,44.512001,7.0,23559000
+2019-03-05,71.0,6.74,70.737999,70.694,9.09,72430000
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: 
+type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+
+```
+
+
+
+### QUERY
+ plot tesla close price on y axis and date on x axis
+
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+If you are asked to plot a chart, use "matplotlib" for charts, save as png.
+
+
+Generate python code and return full updated code:
+            
+2024-05-28 05:54:32 [INFO] Code generated:
+            ```
+            import pandas as pd
+import matplotlib.pyplot as plt
+
+# Write code here
+
+# Plot Tesla close price on y axis and date on x axis
+tesla_close = dfs[0]['Close']
+tesla_date = dfs[0]['Date']
+plt.plot(tesla_date, tesla_close)
+plt.xlabel('Date')
+plt.ylabel('Close Price')
+plt.title('Tesla Close Price Over Time')
+plt.savefig('tesla_close_price.png')
+
+# Declare result var: 
+result = { "type": "plot", "value": "tesla_close_price.png" }
+            ```
+            
+2024-05-28 05:54:32 [INFO] Executing Step 4: CachePopulation
+2024-05-28 05:54:32 [INFO] Executing Step 5: CodeCleaning
+2024-05-28 05:54:32 [INFO] Saving charts to /workspaces/ABCFinance/exports/charts/temp_chart.png
+2024-05-28 05:54:32 [INFO] 
+Code running:
+```
+tesla_close = dfs[0]['Close']
+tesla_date = dfs[0]['Date']
+plt.plot(tesla_date, tesla_close)
+plt.xlabel('Date')
+plt.ylabel('Close Price')
+plt.title('Tesla Close Price Over Time')
+plt.savefig('/workspaces/ABCFinance/exports/charts/temp_chart.png')
+result = {'type': 'plot', 'value': '/workspaces/ABCFinance/exports/charts/temp_chart.png'}
+        ```
+2024-05-28 05:54:32 [INFO] Executing Step 6: CodeExecution
+2024-05-28 05:54:32 [INFO] Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2024-05-28 05:54:33 [INFO] Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2024-05-28 05:54:40 [INFO] Executing Step 7: ResultValidation
+2024-05-28 05:54:40 [INFO] Answer: {'type': 'plot', 'value': '/workspaces/ABCFinance/exports/charts/temp_chart.png'}
+2024-05-28 05:54:40 [INFO] Executing Step 8: ResultParsing
+2024-05-28 05:55:18 [INFO] Question: plot tesla close price on y axis and year from date on x axis
+2024-05-28 05:55:18 [INFO] Running PandasAI with google-gemini LLM...
+2024-05-28 05:55:18 [INFO] Prompt ID: 36e5aaa0-6ffb-4793-808e-36261c86b297
+2024-05-28 05:55:18 [INFO] Executing Pipeline: GenerateChatPipeline
+2024-05-28 05:55:18 [INFO] Executing Step 0: ValidatePipelineInput
+2024-05-28 05:55:18 [INFO] Executing Step 1: CacheLookup
+2024-05-28 05:55:18 [INFO] Executing Step 2: PromptGeneration
+2024-05-28 05:55:18 [INFO] Using prompt: <dataframe>
+dfs[0]:2956x7
+Date,Open,High,Low,Close,Adj Close,Volume
+2010-09-23,6.21,6.546,39.175999,25.122,47.001999,22816800
+2016-02-12,45.82,8.366,48.127998,1199.780029,295.298004,52475000
+2021-06-29,8.62,169.195999,424.51001,42.048,48.425999,61026500
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: 
+type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+
+```
+
+
+
+### QUERY
+ plot tesla close price on y axis and year from date on x axis
+
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+If you are asked to plot a chart, use "matplotlib" for charts, save as png.
+
+
+Generate python code and return full updated code:
+2024-05-28 05:55:18 [INFO] Executing Step 3: CodeGenerator
+2024-05-28 05:55:22 [INFO] Prompt used:
+            
+<dataframe>
+dfs[0]:2956x7
+Date,Open,High,Low,Close,Adj Close,Volume
+2010-09-23,6.21,6.546,39.175999,25.122,47.001999,22816800
+2016-02-12,45.82,8.366,48.127998,1199.780029,295.298004,52475000
+2021-06-29,8.62,169.195999,424.51001,42.048,48.425999,61026500
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: 
+type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+
+```
+
+
+
+### QUERY
+ plot tesla close price on y axis and year from date on x axis
+
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+If you are asked to plot a chart, use "matplotlib" for charts, save as png.
+
+
+Generate python code and return full updated code:
+            
+2024-05-28 05:55:22 [INFO] Code generated:
+            ```
+            import pandas as pd
+import matplotlib.pyplot as plt
+
+# Write code here
+
+# Convert date to year
+dfs[0]['Year'] = dfs[0]['Date'].dt.year
+
+# Plot Tesla close price on y axis and year from date on x axis
+plt.plot(dfs[0]['Year'], dfs[0]['Close'])
+plt.xlabel('Year')
+plt.ylabel('Close Price')
+plt.title('Tesla Close Price Over Time')
+plt.savefig('tesla_close_price.png')
+
+# Declare result var: 
+result = { "type": "plot", "value": "tesla_close_price.png" }
+            ```
+            
+2024-05-28 05:55:22 [INFO] Executing Step 4: CachePopulation
+2024-05-28 05:55:22 [INFO] Executing Step 5: CodeCleaning
+2024-05-28 05:55:22 [INFO] Saving charts to /workspaces/ABCFinance/exports/charts/temp_chart.png
+2024-05-28 05:55:22 [INFO] 
+Code running:
+```
+dfs[0]['Year'] = dfs[0]['Date'].dt.year
+plt.plot(dfs[0]['Year'], dfs[0]['Close'])
+plt.xlabel('Year')
+plt.ylabel('Close Price')
+plt.title('Tesla Close Price Over Time')
+plt.savefig('/workspaces/ABCFinance/exports/charts/temp_chart.png')
+result = {'type': 'plot', 'value': '/workspaces/ABCFinance/exports/charts/temp_chart.png'}
+        ```
+2024-05-28 05:55:22 [INFO] Executing Step 6: CodeExecution
+2024-05-28 05:55:22 [ERROR] Failed with error: Traceback (most recent call last):
+  File "/workspaces/ABCFinance/venv/lib/python3.11/site-packages/pandasai/pipelines/chat/code_execution.py", line 85, in execute
+    result = self.execute_code(code_to_run, code_context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/ABCFinance/venv/lib/python3.11/site-packages/pandasai/pipelines/chat/code_execution.py", line 171, in execute_code
+    exec(code, environment)
+  File "<string>", line 1, in <module>
+  File "/workspaces/ABCFinance/venv/lib/python3.11/site-packages/pandas/core/generic.py", line 5902, in __getattr__
+    return object.__getattribute__(self, name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/ABCFinance/venv/lib/python3.11/site-packages/pandas/core/accessor.py", line 182, in __get__
+    accessor_obj = self._accessor(obj)
+                   ^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/ABCFinance/venv/lib/python3.11/site-packages/pandas/core/indexes/accessors.py", line 512, in __new__
+    raise AttributeError("Can only use .dt accessor with datetimelike values")
+AttributeError: Can only use .dt accessor with datetimelike values
+
+2024-05-28 05:55:22 [WARNING] Failed to execute code retrying with a correction framework [retry number: 1]
+2024-05-28 05:55:22 [INFO] Executing Pipeline: ErrorCorrectionPipeline
+2024-05-28 05:55:22 [INFO] Executing Step 0: ErrorPromptGeneration
+2024-05-28 05:55:22 [INFO] Using prompt: <dataframe>
+dfs[0]:2956x7
+Date,Open,High,Low,Close,Adj Close,Volume
+2010-09-23,6.21,6.546,39.175999,25.122,47.001999,22816800
+2016-02-12,45.82,8.366,48.127998,1199.780029,295.298004,52475000
+2021-06-29,8.62,169.195999,424.51001,42.048,48.425999,61026500
+</dataframe>
+
+
+The user asked the following question:
+### QUERY
+ plot tesla close price on y axis and year from date on x axis
+
+You generated this python code:
+dfs[0]['Year'] = dfs[0]['Date'].dt.year
+plt.plot(dfs[0]['Year'], dfs[0]['Close'])
+plt.xlabel('Year')
+plt.ylabel('Close Price')
+plt.title('Tesla Close Price Over Time')
+plt.savefig('/workspaces/ABCFinance/exports/charts/temp_chart.png')
+result = {'type': 'plot', 'value': '/workspaces/ABCFinance/exports/charts/temp_chart.png'}
+
+It fails with the following error:
+Traceback (most recent call last):
+  File "/workspaces/ABCFinance/venv/lib/python3.11/site-packages/pandasai/pipelines/chat/code_execution.py", line 85, in execute
+    result = self.execute_code(code_to_run, code_context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/ABCFinance/venv/lib/python3.11/site-packages/pandasai/pipelines/chat/code_execution.py", line 171, in execute_code
+    exec(code, environment)
+  File "<string>", line 1, in <module>
+  File "/workspaces/ABCFinance/venv/lib/python3.11/site-packages/pandas/core/generic.py", line 5902, in __getattr__
+    return object.__getattribute__(self, name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/ABCFinance/venv/lib/python3.11/site-packages/pandas/core/accessor.py", line 182, in __get__
+    accessor_obj = self._accessor(obj)
+                   ^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/ABCFinance/venv/lib/python3.11/site-packages/pandas/core/indexes/accessors.py", line 512, in __new__
+    raise AttributeError("Can only use .dt accessor with datetimelike values")
+AttributeError: Can only use .dt accessor with datetimelike values
+
+
+Fix the python code above and return the new python code:
+2024-05-28 05:55:22 [INFO] Executing Step 1: CodeGenerator
+2024-05-28 05:55:24 [INFO] Prompt used:
+            
+<dataframe>
+dfs[0]:2956x7
+Date,Open,High,Low,Close,Adj Close,Volume
+2010-09-23,6.21,6.546,39.175999,25.122,47.001999,22816800
+2016-02-12,45.82,8.366,48.127998,1199.780029,295.298004,52475000
+2021-06-29,8.62,169.195999,424.51001,42.048,48.425999,61026500
+</dataframe>
+
+
+The user asked the following question:
+### QUERY
+ plot tesla close price on y axis and year from date on x axis
+
+You generated this python code:
+dfs[0]['Year'] = dfs[0]['Date'].dt.year
+plt.plot(dfs[0]['Year'], dfs[0]['Close'])
+plt.xlabel('Year')
+plt.ylabel('Close Price')
+plt.title('Tesla Close Price Over Time')
+plt.savefig('/workspaces/ABCFinance/exports/charts/temp_chart.png')
+result = {'type': 'plot', 'value': '/workspaces/ABCFinance/exports/charts/temp_chart.png'}
+
+It fails with the following error:
+Traceback (most recent call last):
+  File "/workspaces/ABCFinance/venv/lib/python3.11/site-packages/pandasai/pipelines/chat/code_execution.py", line 85, in execute
+    result = self.execute_code(code_to_run, code_context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/ABCFinance/venv/lib/python3.11/site-packages/pandasai/pipelines/chat/code_execution.py", line 171, in execute_code
+    exec(code, environment)
+  File "<string>", line 1, in <module>
+  File "/workspaces/ABCFinance/venv/lib/python3.11/site-packages/pandas/core/generic.py", line 5902, in __getattr__
+    return object.__getattribute__(self, name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/ABCFinance/venv/lib/python3.11/site-packages/pandas/core/accessor.py", line 182, in __get__
+    accessor_obj = self._accessor(obj)
+                   ^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/ABCFinance/venv/lib/python3.11/site-packages/pandas/core/indexes/accessors.py", line 512, in __new__
+    raise AttributeError("Can only use .dt accessor with datetimelike values")
+AttributeError: Can only use .dt accessor with datetimelike values
+
+
+Fix the python code above and return the new python code:
+            
+2024-05-28 05:55:24 [INFO] Code generated:
+            ```
+            dfs[0]['Year'] = dfs[0]['Date'].dt.year
+plt.plot(dfs[0]['Year'], dfs[0]['Close'])
+plt.xlabel('Year')
+plt.ylabel('Close Price')
+plt.title('Tesla Close Price Over Time')
+plt.savefig('/workspaces/ABCFinance/exports/charts/temp_chart.png')
+result = {'type': 'plot', 'value': '/workspaces/ABCFinance/exports/charts/temp_chart.png'}
+            ```
+            
+2024-05-28 05:55:24 [INFO] Executing Step 2: CodeCleaning
+2024-05-28 05:55:24 [INFO] Saving charts to /workspaces/ABCFinance/exports/charts/temp_chart.png
+2024-05-28 05:55:24 [INFO] 
+Code running:
+```
+dfs[0]['Year'] = dfs[0]['Date'].dt.year
+plt.plot(dfs[0]['Year'], dfs[0]['Close'])
+plt.xlabel('Year')
+plt.ylabel('Close Price')
+plt.title('Tesla Close Price Over Time')
+plt.savefig('/workspaces/ABCFinance/exports/charts/temp_chart.png')
+result = {'type': 'plot', 'value': '/workspaces/ABCFinance/exports/charts/temp_chart.png'}
+        ```
+2024-05-28 05:55:24 [ERROR] Failed with error: Traceback (most recent call last):
+  File "/workspaces/ABCFinance/venv/lib/python3.11/site-packages/pandasai/pipelines/chat/code_execution.py", line 85, in execute
+    result = self.execute_code(code_to_run, code_context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/ABCFinance/venv/lib/python3.11/site-packages/pandasai/pipelines/chat/code_execution.py", line 171, in execute_code
+    exec(code, environment)
+  File "<string>", line 1, in <module>
+  File "/workspaces/ABCFinance/venv/lib/python3.11/site-packages/pandas/core/generic.py", line 5902, in __getattr__
+    return object.__getattribute__(self, name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/ABCFinance/venv/lib/python3.11/site-packages/pandas/core/accessor.py", line 182, in __get__
+    accessor_obj = self._accessor(obj)
+                   ^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/ABCFinance/venv/lib/python3.11/site-packages/pandas/core/indexes/accessors.py", line 512, in __new__
+    raise AttributeError("Can only use .dt accessor with datetimelike values")
+AttributeError: Can only use .dt accessor with datetimelike values
+
+2024-05-28 05:55:24 [WARNING] Failed to execute code retrying with a correction framework [retry number: 2]
+2024-05-28 05:55:24 [INFO] Executing Pipeline: ErrorCorrectionPipeline
+2024-05-28 05:55:24 [INFO] Executing Step 0: ErrorPromptGeneration
+2024-05-28 05:55:24 [INFO] Using prompt: <dataframe>
+dfs[0]:2956x7
+Date,Open,High,Low,Close,Adj Close,Volume
+2010-09-23,6.21,6.546,39.175999,25.122,47.001999,22816800
+2016-02-12,45.82,8.366,48.127998,1199.780029,295.298004,52475000
+2021-06-29,8.62,169.195999,424.51001,42.048,48.425999,61026500
+</dataframe>
+
+
+The user asked the following question:
+### QUERY
+ plot tesla close price on y axis and year from date on x axis
+
+You generated this python code:
+dfs[0]['Year'] = dfs[0]['Date'].dt.year
+plt.plot(dfs[0]['Year'], dfs[0]['Close'])
+plt.xlabel('Year')
+plt.ylabel('Close Price')
+plt.title('Tesla Close Price Over Time')
+plt.savefig('/workspaces/ABCFinance/exports/charts/temp_chart.png')
+result = {'type': 'plot', 'value': '/workspaces/ABCFinance/exports/charts/temp_chart.png'}
+
+It fails with the following error:
+Traceback (most recent call last):
+  File "/workspaces/ABCFinance/venv/lib/python3.11/site-packages/pandasai/pipelines/chat/code_execution.py", line 85, in execute
+    result = self.execute_code(code_to_run, code_context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/ABCFinance/venv/lib/python3.11/site-packages/pandasai/pipelines/chat/code_execution.py", line 171, in execute_code
+    exec(code, environment)
+  File "<string>", line 1, in <module>
+  File "/workspaces/ABCFinance/venv/lib/python3.11/site-packages/pandas/core/generic.py", line 5902, in __getattr__
+    return object.__getattribute__(self, name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/ABCFinance/venv/lib/python3.11/site-packages/pandas/core/accessor.py", line 182, in __get__
+    accessor_obj = self._accessor(obj)
+                   ^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/ABCFinance/venv/lib/python3.11/site-packages/pandas/core/indexes/accessors.py", line 512, in __new__
+    raise AttributeError("Can only use .dt accessor with datetimelike values")
+AttributeError: Can only use .dt accessor with datetimelike values
+
+
+Fix the python code above and return the new python code:
+2024-05-28 05:55:24 [INFO] Executing Step 1: CodeGenerator
+2024-05-28 05:55:27 [INFO] Prompt used:
+            
+<dataframe>
+dfs[0]:2956x7
+Date,Open,High,Low,Close,Adj Close,Volume
+2010-09-23,6.21,6.546,39.175999,25.122,47.001999,22816800
+2016-02-12,45.82,8.366,48.127998,1199.780029,295.298004,52475000
+2021-06-29,8.62,169.195999,424.51001,42.048,48.425999,61026500
+</dataframe>
+
+
+The user asked the following question:
+### QUERY
+ plot tesla close price on y axis and year from date on x axis
+
+You generated this python code:
+dfs[0]['Year'] = dfs[0]['Date'].dt.year
+plt.plot(dfs[0]['Year'], dfs[0]['Close'])
+plt.xlabel('Year')
+plt.ylabel('Close Price')
+plt.title('Tesla Close Price Over Time')
+plt.savefig('/workspaces/ABCFinance/exports/charts/temp_chart.png')
+result = {'type': 'plot', 'value': '/workspaces/ABCFinance/exports/charts/temp_chart.png'}
+
+It fails with the following error:
+Traceback (most recent call last):
+  File "/workspaces/ABCFinance/venv/lib/python3.11/site-packages/pandasai/pipelines/chat/code_execution.py", line 85, in execute
+    result = self.execute_code(code_to_run, code_context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/ABCFinance/venv/lib/python3.11/site-packages/pandasai/pipelines/chat/code_execution.py", line 171, in execute_code
+    exec(code, environment)
+  File "<string>", line 1, in <module>
+  File "/workspaces/ABCFinance/venv/lib/python3.11/site-packages/pandas/core/generic.py", line 5902, in __getattr__
+    return object.__getattribute__(self, name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/ABCFinance/venv/lib/python3.11/site-packages/pandas/core/accessor.py", line 182, in __get__
+    accessor_obj = self._accessor(obj)
+                   ^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/ABCFinance/venv/lib/python3.11/site-packages/pandas/core/indexes/accessors.py", line 512, in __new__
+    raise AttributeError("Can only use .dt accessor with datetimelike values")
+AttributeError: Can only use .dt accessor with datetimelike values
+
+
+Fix the python code above and return the new python code:
+            
+2024-05-28 05:55:27 [INFO] Code generated:
+            ```
+            dfs[0]['Year'] = dfs[0]['Date'].dt.year
+plt.plot(dfs[0]['Year'], dfs[0]['Close'])
+plt.xlabel('Year')
+plt.ylabel('Close Price')
+plt.title('Tesla Close Price Over Time')
+plt.savefig('/workspaces/ABCFinance/exports/charts/temp_chart.png')
+result = {'type': 'plot', 'value': '/workspaces/ABCFinance/exports/charts/temp_chart.png'}
+            ```
+            
+2024-05-28 05:55:27 [INFO] Executing Step 2: CodeCleaning
+2024-05-28 05:55:27 [INFO] Saving charts to /workspaces/ABCFinance/exports/charts/temp_chart.png
+2024-05-28 05:55:27 [INFO] 
+Code running:
+```
+dfs[0]['Year'] = dfs[0]['Date'].dt.year
+plt.plot(dfs[0]['Year'], dfs[0]['Close'])
+plt.xlabel('Year')
+plt.ylabel('Close Price')
+plt.title('Tesla Close Price Over Time')
+plt.savefig('/workspaces/ABCFinance/exports/charts/temp_chart.png')
+result = {'type': 'plot', 'value': '/workspaces/ABCFinance/exports/charts/temp_chart.png'}
+        ```
+2024-05-28 05:55:27 [ERROR] Failed with error: Traceback (most recent call last):
+  File "/workspaces/ABCFinance/venv/lib/python3.11/site-packages/pandasai/pipelines/chat/code_execution.py", line 85, in execute
+    result = self.execute_code(code_to_run, code_context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/ABCFinance/venv/lib/python3.11/site-packages/pandasai/pipelines/chat/code_execution.py", line 171, in execute_code
+    exec(code, environment)
+  File "<string>", line 1, in <module>
+  File "/workspaces/ABCFinance/venv/lib/python3.11/site-packages/pandas/core/generic.py", line 5902, in __getattr__
+    return object.__getattribute__(self, name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/ABCFinance/venv/lib/python3.11/site-packages/pandas/core/accessor.py", line 182, in __get__
+    accessor_obj = self._accessor(obj)
+                   ^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/ABCFinance/venv/lib/python3.11/site-packages/pandas/core/indexes/accessors.py", line 512, in __new__
+    raise AttributeError("Can only use .dt accessor with datetimelike values")
+AttributeError: Can only use .dt accessor with datetimelike values
+
+2024-05-28 05:55:27 [WARNING] Failed to execute code retrying with a correction framework [retry number: 3]
+2024-05-28 05:55:27 [INFO] Executing Pipeline: ErrorCorrectionPipeline
+2024-05-28 05:55:27 [INFO] Executing Step 0: ErrorPromptGeneration
+2024-05-28 05:55:27 [INFO] Using prompt: <dataframe>
+dfs[0]:2956x7
+Date,Open,High,Low,Close,Adj Close,Volume
+2010-09-23,6.21,6.546,39.175999,25.122,47.001999,22816800
+2016-02-12,45.82,8.366,48.127998,1199.780029,295.298004,52475000
+2021-06-29,8.62,169.195999,424.51001,42.048,48.425999,61026500
+</dataframe>
+
+
+The user asked the following question:
+### QUERY
+ plot tesla close price on y axis and year from date on x axis
+
+You generated this python code:
+dfs[0]['Year'] = dfs[0]['Date'].dt.year
+plt.plot(dfs[0]['Year'], dfs[0]['Close'])
+plt.xlabel('Year')
+plt.ylabel('Close Price')
+plt.title('Tesla Close Price Over Time')
+plt.savefig('/workspaces/ABCFinance/exports/charts/temp_chart.png')
+result = {'type': 'plot', 'value': '/workspaces/ABCFinance/exports/charts/temp_chart.png'}
+
+It fails with the following error:
+Traceback (most recent call last):
+  File "/workspaces/ABCFinance/venv/lib/python3.11/site-packages/pandasai/pipelines/chat/code_execution.py", line 85, in execute
+    result = self.execute_code(code_to_run, code_context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/ABCFinance/venv/lib/python3.11/site-packages/pandasai/pipelines/chat/code_execution.py", line 171, in execute_code
+    exec(code, environment)
+  File "<string>", line 1, in <module>
+  File "/workspaces/ABCFinance/venv/lib/python3.11/site-packages/pandas/core/generic.py", line 5902, in __getattr__
+    return object.__getattribute__(self, name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/ABCFinance/venv/lib/python3.11/site-packages/pandas/core/accessor.py", line 182, in __get__
+    accessor_obj = self._accessor(obj)
+                   ^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/ABCFinance/venv/lib/python3.11/site-packages/pandas/core/indexes/accessors.py", line 512, in __new__
+    raise AttributeError("Can only use .dt accessor with datetimelike values")
+AttributeError: Can only use .dt accessor with datetimelike values
+
+
+Fix the python code above and return the new python code:
+2024-05-28 05:55:27 [INFO] Executing Step 1: CodeGenerator
+2024-05-28 05:55:30 [INFO] Prompt used:
+            
+<dataframe>
+dfs[0]:2956x7
+Date,Open,High,Low,Close,Adj Close,Volume
+2010-09-23,6.21,6.546,39.175999,25.122,47.001999,22816800
+2016-02-12,45.82,8.366,48.127998,1199.780029,295.298004,52475000
+2021-06-29,8.62,169.195999,424.51001,42.048,48.425999,61026500
+</dataframe>
+
+
+The user asked the following question:
+### QUERY
+ plot tesla close price on y axis and year from date on x axis
+
+You generated this python code:
+dfs[0]['Year'] = dfs[0]['Date'].dt.year
+plt.plot(dfs[0]['Year'], dfs[0]['Close'])
+plt.xlabel('Year')
+plt.ylabel('Close Price')
+plt.title('Tesla Close Price Over Time')
+plt.savefig('/workspaces/ABCFinance/exports/charts/temp_chart.png')
+result = {'type': 'plot', 'value': '/workspaces/ABCFinance/exports/charts/temp_chart.png'}
+
+It fails with the following error:
+Traceback (most recent call last):
+  File "/workspaces/ABCFinance/venv/lib/python3.11/site-packages/pandasai/pipelines/chat/code_execution.py", line 85, in execute
+    result = self.execute_code(code_to_run, code_context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/ABCFinance/venv/lib/python3.11/site-packages/pandasai/pipelines/chat/code_execution.py", line 171, in execute_code
+    exec(code, environment)
+  File "<string>", line 1, in <module>
+  File "/workspaces/ABCFinance/venv/lib/python3.11/site-packages/pandas/core/generic.py", line 5902, in __getattr__
+    return object.__getattribute__(self, name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/ABCFinance/venv/lib/python3.11/site-packages/pandas/core/accessor.py", line 182, in __get__
+    accessor_obj = self._accessor(obj)
+                   ^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/ABCFinance/venv/lib/python3.11/site-packages/pandas/core/indexes/accessors.py", line 512, in __new__
+    raise AttributeError("Can only use .dt accessor with datetimelike values")
+AttributeError: Can only use .dt accessor with datetimelike values
+
+
+Fix the python code above and return the new python code:
+            
+2024-05-28 05:55:30 [INFO] Code generated:
+            ```
+            dfs[0]['Year'] = dfs[0]['Date'].dt.year
+plt.plot(dfs[0]['Year'], dfs[0]['Close'])
+plt.xlabel('Year')
+plt.ylabel('Close Price')
+plt.title('Tesla Close Price Over Time')
+plt.savefig('/workspaces/ABCFinance/exports/charts/temp_chart.png')
+result = {'type': 'plot', 'value': '/workspaces/ABCFinance/exports/charts/temp_chart.png'}
+            ```
+            
+2024-05-28 05:55:30 [INFO] Executing Step 2: CodeCleaning
+2024-05-28 05:55:30 [INFO] Saving charts to /workspaces/ABCFinance/exports/charts/temp_chart.png
+2024-05-28 05:55:30 [INFO] 
+Code running:
+```
+dfs[0]['Year'] = dfs[0]['Date'].dt.year
+plt.plot(dfs[0]['Year'], dfs[0]['Close'])
+plt.xlabel('Year')
+plt.ylabel('Close Price')
+plt.title('Tesla Close Price Over Time')
+plt.savefig('/workspaces/ABCFinance/exports/charts/temp_chart.png')
+result = {'type': 'plot', 'value': '/workspaces/ABCFinance/exports/charts/temp_chart.png'}
+        ```
+2024-05-28 05:55:30 [ERROR] Failed with error: Traceback (most recent call last):
+  File "/workspaces/ABCFinance/venv/lib/python3.11/site-packages/pandasai/pipelines/chat/code_execution.py", line 85, in execute
+    result = self.execute_code(code_to_run, code_context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/ABCFinance/venv/lib/python3.11/site-packages/pandasai/pipelines/chat/code_execution.py", line 171, in execute_code
+    exec(code, environment)
+  File "<string>", line 1, in <module>
+  File "/workspaces/ABCFinance/venv/lib/python3.11/site-packages/pandas/core/generic.py", line 5902, in __getattr__
+    return object.__getattribute__(self, name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/ABCFinance/venv/lib/python3.11/site-packages/pandas/core/accessor.py", line 182, in __get__
+    accessor_obj = self._accessor(obj)
+                   ^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/ABCFinance/venv/lib/python3.11/site-packages/pandas/core/indexes/accessors.py", line 512, in __new__
+    raise AttributeError("Can only use .dt accessor with datetimelike values")
+AttributeError: Can only use .dt accessor with datetimelike values
+
+2024-05-28 05:55:30 [ERROR] Pipeline failed on step 6: Can only use .dt accessor with datetimelike values
