@@ -35,7 +35,7 @@ def intro():
         decisions with ease and confidence.
 
         ## News Agent
-        Stay informed with the latest financial news fetched directly from the internet, keeping you updated
+        Stay informed with the latest financial news fetched directly from the internet summarised for you, keeping you updated
         on market trends, economic developments, and breaking news that matters to your investments.
     """
     )

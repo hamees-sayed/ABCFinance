@@ -47,7 +47,7 @@ def summarise_news(content: str):
     Impact: Analyze the article's main idea and supporting arguments to provide insights into the topic. Identify any implications or consequences of the article's findings or arguments.
     Quotes: Incorporate relevant quotes from the article that support the main idea or add depth to the summary. Ensure quotes are accurately attributed to the correct individuals.
     Insights: Offer an analysis of what this news means in simpler terms.
-    Omit unnecessary information and jargon. Strive for a clear, logical, concise, and objective summary that is easy to understand.
+    Omit unnecessary information and jargon. Strive for a clear, logical, concise, and objective summary that is easy to understand. Use emojis if required to keep it engaging.
     \n
     Summary:
     """

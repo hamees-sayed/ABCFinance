@@ -41,7 +41,8 @@ def generate_response(query: str):
     Use the provided context to derive your answer, ensuring all information comes directly from the context. Break down complex financial 
     concepts into easy-to-understand language, using analogies and relatable examples whenever possible. Focus on educating users and 
     empowering them to make informed financial decisions in a conversational style. Please provide detailed steps, 
-    explanations, and examples where applicable to ensure the answer is thorough and informative.
+    explanations, and examples where applicable to ensure the answer is thorough and informative. Use emojis if required to keep
+    it engaging.
     \n\n
     Context:\n {context}?\n
     Question: \n{question}\n
