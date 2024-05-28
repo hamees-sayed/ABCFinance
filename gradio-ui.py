@@ -1,6 +1,7 @@
 import gradio as gr
 import google.generativeai as genai
 from stocks_agent import get_stock
+from news_agent import generate_news
 
 genai.configure(api_key='AIzaSyDap6T0UIajYoMUXLjlcb7yf0_4EDD27Xs')
 model = genai.GenerativeModel(model_name='gemini-1.5-flash',
@@ -8,12 +9,13 @@ model = genai.GenerativeModel(model_name='gemini-1.5-flash',
                                                     You were created by Advait and Hasan for the benefit of the user. Feel free to use emojis.
                                                     You are an agent that provides useful information and summaries about stocks.
                                                     Your goal is to help the user navigate the stock markets and give sound financial help.
-                                                    You have access to tools that provide stock information. Include links from context in your answers.
+                                                    You have access to Stock Agent and News Agent. Include links from context in your answers.
                                                     Prefer using relevent context from your history before calling a tool.
                                                     Avoid asking the user follow up questions unless you really need to.    
                                                     Answer all their queries promptly to the best of your ability, using the tools and context provided.
                                                 ''',
-                              tools=[get_stock]
+
+                              tools=[get_stock, generate_news]
                               )
 
 chat = model.start_chat(enable_automatic_function_calling=True)

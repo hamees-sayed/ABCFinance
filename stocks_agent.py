@@ -45,17 +45,51 @@ def get_stock(query: str):
     # print("Returning summary:", summary)
     return summary
 
-if __name__ == '__main__':
-    # GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY')
-    genai.configure(api_key='AIzaSyDap6T0UIajYoMUXLjlcb7yf0_4EDD27Xs')
-    model = genai.GenerativeModel( model_name='gemini-1.5-flash',
-                                tools=[get_stock] )
-    
-    input = "what is the stock price of Punjab National Bank?"
+def get_news(query:str = "Tata Motors news"):
+    '''Fetches the latest news of the company'''
+    params = {
+        "engine": "google_news",
+        "q": query,
+        "cc": "in",
+        "qft": 7,
+        "api_key": "441a9056343a4481b099d44e177e65ea540d9a8b8af3f7b87c63da0235b74361"
+    }
 
-    chat = model.start_chat(enable_automatic_function_calling=True)
+    search = GoogleSearch(params)
+    results = search.get_dict()
+    return results
+
+genai.configure(api_key='AIzaSyDap6T0UIajYoMUXLjlcb7yf0_4EDD27Xs')
+model = genai.GenerativeModel(model_name='gemini-1.5-flash',
+                            system_instruction='''You are a helpful financial assistant. Your name is Stock Bro.
+                                                You were created by Advait and Hasan for the benefit of the user. Feel free to use emojis.
+                                                You are an agent that provides useful information and summaries about stocks.
+                                                Your goal is to help the user navigate the stock markets and give sound financial help.
+                                                You have access to Stock Agent and News Agent. Include links from context in your answers.
+                                                Prefer using relevent context from your history before calling a tool.
+                                                Avoid asking the user follow up questions unless you really need to.    
+                                                Answer all their queries promptly to the best of your ability, using the tools and context provided.
+                                            ''',
+
+                            tools=[get_stock, get_news]
+                            )
+
+chat = model.start_chat(enable_automatic_function_calling=True)
+
+def stock_agent(query, history):
+    if query=="":
+        return "Don't make empty requests. Please ask me something about stocks!"
+    if history==[]:
+        chat.history = []
+    
+    response = chat.send_message(query)
+    return response.text
+
+if __name__ == '__main__':    
+    input = "what is the stock price of Punjab National Bank?"
     response = chat.send_message(input)
     print(response.text+'\n')
+
     for content in chat.history:
         part = content.parts[0]
         print(content.role, "->", type(part).to_dict(part))
