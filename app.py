@@ -1,8 +1,8 @@
 import pandas as pd
 import streamlit as st
-from news_agent import generate_news
 from investopedia_agent import generate_response
 from data_analyst_agent import generate_data_analyst_response
+from news_agent import generate_news, summarise_news, convert_date
 
 
 def intro():
@@ -84,12 +84,11 @@ def news_agent():
             with st.spinner('Thinking...'):
                 response = generate_news(prompt)
                 for result in response:
-                    if result.get("snippet") and result.get("thumbnail"):
-                        st.write(f"**{result['title']}**")
-                        st.write(result['snippet'])
-                        st.image(result['thumbnail'])
-                        st.markdown(f"[{result['source']}]({result['link']}), {result['date']}")
-                        st.markdown("---")
+                    st.write(f"**{result['title']}**")
+                    st.image(result['urlToImage'], 300)
+                    st.write(summarise_news(result['content']))
+                    st.markdown(f"[{result['source']['name']}]({result['url']}), {convert_date(result['publishedAt'])}")
+                    st.markdown("---")
     
 if __name__ == '__main__':
     page_names_to_funcs = {

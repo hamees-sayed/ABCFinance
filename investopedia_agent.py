@@ -1,4 +1,5 @@
 import os
+from dotenv import load_dotenv
 from qdrant_client import QdrantClient
 from sentence_transformers import SentenceTransformer
 from langchain.prompts import PromptTemplate
@@ -7,6 +8,7 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 
 client = QdrantClient(path="investopedia.db")
 encoder = SentenceTransformer("all-MiniLM-L6-v2")
+load_dotenv()
 
 def get_context(query: str):
     query_vector = encoder.encode(query).tolist()
