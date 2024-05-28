@@ -39,22 +39,29 @@ def intro():
         on market trends, economic developments, and breaking news that matters to your investments.
     """
     )
+    st.info("We appreciate your engagement! Please note, this project at its current state does not support conversational memory, we are working on it. Thank you for your understanding.")
     
-def investopedia_agent():
-    st.title('Investopedia Agent')
 
-    prompt = st.text_area('Ask me questions about financial topics')
-    if st.button('Ask'):
-        if prompt:
-            with st.spinner('Thinking...'):
-                response, sources = generate_response(prompt)
-                st.write(response)
-                st.write("References:")
-                for key, value in sources.items():
-                    st.link_button(key, value)
-        else:
-            st.warning('Please enter a prompt')
+def investopedia_agent():
+    if "messages" not in st.session_state:
+        st.session_state.messages = []
+
+    for message in st.session_state.messages:
+        with st.chat_message(message["role"]):
+            st.markdown(message["content"])
+
+    if prompt := st.chat_input("Ask me questions about Financial Topics 🧑‍🏫"):
+        st.chat_message("user").markdown(prompt)
+        st.session_state.messages.append({"role": "user", "content": prompt})
+        response, sources = generate_response(prompt)
+        with st.chat_message("assistant"):
+            st.markdown(response)
+            st.markdown("References:")
+            for key, value in sources.items():
+                st.link_button(key, value)
+        st.session_state.messages.append({"role": "assistant", "content": response})
             
+
 def data_analysis_agent():
     st.title('Data Analysis Agent')
 
@@ -74,7 +81,8 @@ def data_analysis_agent():
                     st.pyplot()
             else:
                 st.warning('Please enter a prompt')
-                
+
+
 def news_agent():
     st.title('News Agent')
 
@@ -89,6 +97,7 @@ def news_agent():
                     st.write(summarise_news(result['content']))
                     st.markdown(f"[{result['source']['name']}]({result['url']}), {convert_date(result['publishedAt'])}")
                     st.markdown("---")
+    
     
 if __name__ == '__main__':
     page_names_to_funcs = {
