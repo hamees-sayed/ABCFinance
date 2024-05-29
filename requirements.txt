@@ -13,4 +13,4 @@ sentence-transformers
 newsapi-python
 uagents
 faiss-cpu
-chromadb
+chromadb==0.3.29
