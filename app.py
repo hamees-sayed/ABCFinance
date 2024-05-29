@@ -1,9 +1,34 @@
 import pandas as pd
+import asyncio
+import base64
+import json
+import re
+import ast
 import streamlit as st
+from uagents.query import query
+from uagents import Model
 from investopedia_agent import generate_response
 from data_analyst_agent import generate_data_analyst_response
-from news_agent import generate_news, summarise_news, convert_date
+from news_agent import summarise_news, convert_date
 
+def run_async(coro):
+    """Helper function to run an asyncio coroutine in Streamlit."""
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    loop.run_until_complete(coro)
+    loop.close()
+
+news_address="agent1qwxadkq8qx7yhx6g50y60egm6ywvae2x94q3avashqkuccmznnzmya6s87x"
+
+
+loop = asyncio.new_event_loop()
+asyncio.set_event_loop(loop)
+
+class NewsRequest(Model):
+    query: str
+
+class NewsResponse(Model):
+    answer: str
 
 def intro():
     import streamlit as st
@@ -64,9 +89,9 @@ def investopedia_agent():
             for key, value in sources.items():
                 st.link_button(key, value)
         st.session_state.messages.append({"role": "assistant", "content": response})
-            
 
-def data_analysis_agent():
+
+async def data_analysis_agent():
     st.title('Data Analysis Agent')
 
     csv_file = st.file_uploader('Upload a CSV file', type=['csv'])
@@ -79,7 +104,7 @@ def data_analysis_agent():
             if prompt:
                 with st.spinner('Thinking...'):
                     response = generate_data_analyst_response(prompt, df)
-                    if response != "/workspaces/ABCFinance/exports/charts/temp_chart.png":
+                    if response != "/speech/advait/ABCFinance/exports/charts/temp_chart.png":
                         st.success(response)
                     st.set_option('deprecation.showPyplotGlobalUse', False)
                     st.pyplot()
@@ -87,31 +112,41 @@ def data_analysis_agent():
                 st.warning('Please enter a prompt')
 
 
-def news_agent():
+async def news_agent():
     st.title('News Agent')
 
     prompt = st.text_area("Latest news on financial topics, e.g 'Stock Trends', 'Finance News'", value="Finance India")
     if st.button('Generate'):
         if prompt:
             with st.spinner('Thinking...'):
-                response = generate_news(prompt)
-                for result in response:
+                response = await query(destination=news_address, message=NewsRequest(query=prompt), timeout=15.0)
+                data = json.loads(response.decode_payload())["answer"]
+                response_data = ast.literal_eval(data)
+                for result in response_data:
                     st.write(f"**{result['title']}**")
                     st.image(result['urlToImage'], 300)
                     st.write(summarise_news(result['content']))
                     st.markdown(f"[{result['source']['name']}]({result['url']}), {convert_date(result['publishedAt'])}")
                     st.markdown("---")
+
+async def stocks_agent():
+    pass
     
     
 if __name__ == '__main__':
     page_names_to_funcs = {
         "—": intro,
         "Investopedia Agent 🧑‍🏫": investopedia_agent,
-        "Stocks Agent 💹": "mapping_demo",
+        "Stocks Agent 💹": stocks_agent,
         "Data Analysis Agent 📊": data_analysis_agent,
         "News Agent 📰": news_agent,
     }
 
     demo_name = st.sidebar.selectbox("Choose a demo", page_names_to_funcs.keys())
-    page_names_to_funcs[demo_name]()
+    selected_demo = page_names_to_funcs[demo_name]
+    if asyncio.iscoroutinefunction(selected_demo):
+        run_async(selected_demo())
+    else:
+        selected_demo()
+
 

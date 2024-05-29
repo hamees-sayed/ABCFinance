@@ -12,4 +12,5 @@ langchain-google-genai
 sentence-transformers
 newsapi-python
 uagents
+faiss-cpu
 chromadb

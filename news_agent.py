@@ -1,17 +1,28 @@
 import os
 import requests
 from dotenv import load_dotenv
-from newsapi import NewsApiClient
 from langchain.chains.llm import LLMChain
 from langchain.prompts import PromptTemplate
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta
 from langchain_google_genai import ChatGoogleGenerativeAI
+from uagents import Agent, Model, Context
+from uagents.setup import fund_agent_if_low
+import asyncio
 
 load_dotenv()
 today = datetime.now()
 yesterday = today - timedelta(days=1)
 yesterday_date = yesterday.date().isoformat()
 today_date = today.date().isoformat()
+
+loop = asyncio.new_event_loop()
+asyncio.set_event_loop(loop)
+
+class NewsRequest(Model):
+    query: str
+
+class NewsResponse(Model):
+    answer: str
 
 def generate_news(query="stock trends in india"):
     url = "https://newsapi.org/v2/everything?"
@@ -32,8 +43,6 @@ def generate_news(query="stock trends in india"):
             filtered_articles.append(article)
 
     return filtered_articles[:10]
-
-
 
 def summarise_news(content: str):
     prompt_template = """
@@ -64,4 +73,27 @@ def convert_date(date_str):
     human_readable_date = date_obj.strftime("%d %B, %Y")
     return human_readable_date
 
-generate_news()
+NewsAgent = Agent(
+    name="NewsAgent",
+    port=8000,
+    seed="News Agent",
+    endpoint=["http://127.0.0.1:8000/submit"]
+)
+
+fund_agent_if_low(NewsAgent.wallet.address())
+
+@NewsAgent.on_event("startup")
+async def agent_details(ctx: Context):
+    ctx.logger.info(f"News Agent Address: {ctx.address}")
+
+@NewsAgent.on_query(model=NewsRequest, replies={NewsResponse})
+async def query_handler(ctx: Context, sender: str, msg: NewsRequest):
+    try:
+        answer = generate_news(msg.query)
+        await ctx.send(sender, NewsResponse(answer=str(answer)))
+    except Exception as e:
+        err_msg = f"Error: {e}"
+        ctx.logger.info(err_msg)
+
+if __name__ == "__main__":
+    NewsAgent.run()
