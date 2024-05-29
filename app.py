@@ -129,7 +129,7 @@ async def data_analysis_agent():
 
 async def news_agent():
     st.title('News Agent')
-
+    st.info("Disclaimer: News Agent might be down at times, render.com where the agent is deployed has a load time of at least 50 seconds from cold start, run locally for best experience.")
     prompt = st.text_area("Latest news on financial topics, e.g 'Stock Trends', 'Finance News'", value="Finance India")
     if st.button('Generate'):
         if prompt:
