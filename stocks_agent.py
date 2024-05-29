@@ -1,35 +1,41 @@
 import os
-from serpapi import GoogleSearch
+import serpapi
 import google.generativeai as genai
 import chromadb
-from sentence_transformers import SentenceTransformer
+import chromadb.utils.embedding_functions as embedding_functions
+import dotenv
+
+dotenv.load_dotenv()
+
+sentence_transformer_ef = embedding_functions.SentenceTransformerEmbeddingFunction(model_name="all-MiniLM-L6-v2", normalize_embeddings=True)
+
+print(os.environ.get("SERP_API_KEY"))
 
 client = chromadb.PersistentClient(path="agents.db")
-encoder = SentenceTransformer("all-MiniLM-L6-v2", device="cuda")
 
-nse_client = client.get_collection("nse")
-ndq_client = client.get_collection("ndq")
+nse_client = client.get_collection("nse", embedding_function=sentence_transformer_ef)
+ndq_client = client.get_collection("ndq", embedding_function=sentence_transformer_ef)
 
 def get_ticker(query: str):
-    query_vector = encoder.encode(query).tolist()
     ndq = ndq_client.query(query_texts=query, n_results=1)
     nse = nse_client.query(query_texts=query, n_results=1)
+    print(ndq.get("metadatas")[0][0]["Symbol"])
 
     if ndq.get('distances')[0]>nse.get('distances')[0]:
-        return ndq.payload["Symbol"]+":NASDAQ"
+        return ndq.get("metadatas")[0][0]["Symbol"]+":NASDAQ"
     else:
-        return nse.payload["SYMBOL"]+":NSE"    
+        return nse.get("metadatas")[0][0]["SYMBOL"]+":NSE"    
 
 def get_stock_summary(ticker: str):
     params = {
         "engine": "google_finance",
         "q": ticker,
         "gl": "in",
-        "api_key": "441a9056343a4481b099d44e177e65ea540d9a8b8af3f7b87c63da0235b74361"
+        "api_key": os.environ.get("SERP_API_KEY")
     }
 
-    search = GoogleSearch(params)
-    results = search.get_dict()
+    search = serpapi.search(params)
+    results = search.as_dict()
     return results
 
 def get_stock(query: str):
@@ -47,14 +53,14 @@ def get_news(query:str = "Tata Motors news"):
         "q": query,
         "cc": "in",
         "qft": 7,
-        "api_key": "441a9056343a4481b099d44e177e65ea540d9a8b8af3f7b87c63da0235b74361"
+        "api_key": os.environ.get("SERP_API_KEY")
     }
 
-    search = GoogleSearch(params)
-    results = search.get_dict()
+    search = serpapi.search(params)
+    results = search.as_dict()
     return results
 
-genai.configure(api_key='AIzaSyDap6T0UIajYoMUXLjlcb7yf0_4EDD27Xs')
+genai.configure(api_key=os.environ.get("GOOGLE_API_KEY"))
 model = genai.GenerativeModel(model_name='gemini-1.5-flash',
                             system_instruction='''You are a helpful financial assistant. Your name is Stock Bro.
                                                 You were created by Advait and Hasan for the benefit of the user. Feel free to use emojis.

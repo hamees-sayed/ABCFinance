@@ -5,3 +5,9 @@ cache
 exports
 .devcontainer
 .streamlit
+chromadb.ipynb
+vdb.ipynb
+vdbfaiss.ipynb
+vecdb.ipynb
+nse.csv
+ndq.csv

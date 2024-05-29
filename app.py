@@ -10,6 +10,7 @@ from uagents import Model
 from investopedia_agent import generate_response
 from data_analyst_agent import generate_data_analyst_response
 from news_agent import summarise_news, convert_date
+from stocks_agent import stock_agent
 
 def run_async(coro):
     """Helper function to run an asyncio coroutine in Streamlit."""
@@ -29,6 +30,15 @@ class NewsRequest(Model):
 
 class NewsResponse(Model):
     answer: str
+
+def clear_other_agent_history(active_agent):
+    # Check and clear the other agent's history if the active agent is different
+    if active_agent == "stocks" and st.session_state.get("active_agent") != "stocks":
+        st.session_state.clear()
+        st.session_state.active_agent = "stocks"
+    elif active_agent == "investopedia" and st.session_state.get("active_agent") != "investopedia":
+        st.session_state.clear()
+        st.session_state.active_agent = "investopedia"
 
 def intro():
     import streamlit as st
@@ -68,10 +78,12 @@ def intro():
         [Advait](https://github.com/rumourscape)
     """
     )
-    st.info("We appreciate your engagement! Please note, this project at its current state does not support conversational memory, we are working on it. Thank you for your understanding.")
+    st.info("We appreciate your engagement! Please note, this project at its current state does not support conversational memory except Stock Agent, we are working on it. Thank you for your understanding. Load or Inference Time may be slow.")
     
 
 def investopedia_agent():
+    clear_other_agent_history("investopedia")
+
     if "messages" not in st.session_state:
         st.session_state.messages = []
 
@@ -130,7 +142,22 @@ async def news_agent():
                     st.markdown("---")
 
 async def stocks_agent():
-    pass
+    clear_other_agent_history("stocks")
+
+    if "messages" not in st.session_state:
+        st.session_state.messages = []
+
+    for message in st.session_state.messages:
+        with st.chat_message(message["role"]):
+            st.markdown(message["content"])
+
+    if prompt := st.chat_input("Ask me anything about Stocks 💹"):
+        st.chat_message("user").markdown(prompt)
+        st.session_state.messages.append({"role": "user", "content": prompt})
+        response = stock_agent(prompt, st.session_state.messages)
+        with st.chat_message("assistant"):
+            st.markdown(response)
+        st.session_state.messages.append({"role": "assistant", "content": response})
     
     
 if __name__ == '__main__':
