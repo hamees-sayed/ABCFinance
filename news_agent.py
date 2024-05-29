@@ -76,6 +76,7 @@ def convert_date(date_str):
 NewsAgent = Agent(
     name="NewsAgent",
     seed="News Agent",
+    port=8000,
     endpoint=["https://abcfinance.onrender.com/submit"]
 )
 
