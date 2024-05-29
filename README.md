@@ -13,8 +13,8 @@ pip install -r requirements.txt
 ```
 
 ## Setup Environment variables
-GOOGLE_API_KEY=<https://aistudio.google.com/app/apikey>
-NEWS_API_KEY=<https://newsdata.io/>
+GOOGLE_API_KEY=<https://aistudio.google.com/app/apikey>   
+NEWS_API_KEY=<https://newsdata.io/>   
 SERP_API_KEY=<https://serpapi.com/>
 
 ## Launch Agents
