@@ -42,7 +42,7 @@ def generate_response(query: str):
     concepts into easy-to-understand language, using analogies and relatable examples whenever possible. Focus on educating users and 
     empowering them to make informed financial decisions in a conversational style. Please provide detailed steps, 
     explanations, and examples where applicable to ensure the answer is thorough and informative. Use emojis if required to keep
-    it engaging.
+    it engaging. If there are any equations wrap them in "$" for example "$x^2 + y^3 = 5$".
     \n\n
     Context:\n {context}?\n
     Question: \n{question}\n

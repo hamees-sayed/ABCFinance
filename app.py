@@ -36,7 +36,11 @@ def intro():
 
         ## News Agent
         Stay informed with the latest financial news fetched directly from the internet summarised for you, keeping you updated
-        on market trends, economic developments, and breaking news that matters to your investments.
+        on market trends, economic developments, and breaking news that matters to your investments.   
+
+        Made by:    
+        [Hamees Ul Hasan](https://github.com/hamees-sayed)  
+        [Advait](https://github.com/rumourscape)
     """
     )
     st.info("We appreciate your engagement! Please note, this project at its current state does not support conversational memory, we are working on it. Thank you for your understanding.")
