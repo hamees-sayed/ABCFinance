@@ -2,24 +2,12 @@ import os
 from dotenv import load_dotenv
 import faiss
 import json
-import asyncio
 from sentence_transformers import SentenceTransformer
 from langchain.prompts import PromptTemplate
 from langchain.chains.llm import LLMChain
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.docstore.document import Document as LangchainDocument
 import datasets
-from uagents import Agent, Model, Context
-from uagents.setup import fund_agent_if_low
-
-loop = asyncio.new_event_loop()
-asyncio.set_event_loop(loop)
-
-class InvestopediaRequest(Model):
-    query: str
-
-class InvestopediaResponse(Model):
-    answer: str
 
 embeddings_model = SentenceTransformer("all-MiniLM-L6-v2")
 index = faiss.read_index("faiss_index.bin")
@@ -75,31 +63,4 @@ def generate_response(query: str):
     response = chain.invoke(context_data)
     
     answer = f"{response['text']}\n\n"
-    return {"answer": answer, "sources": sources}
-
-InvestopediaAgent = Agent(
-    name="InvestopediaAgent",
-    port=8000,
-    seed="Investopedia Agent",
-    endpoint=["http://127.0.0.1:8000/submit"]
-)
-
-fund_agent_if_low(InvestopediaAgent.wallet.address())
-
-@InvestopediaAgent.on_event("startup")
-async def agent_details(ctx: Context):
-    ctx.logger.info(f"Investopedia Agent Address: {ctx.address}")
-
-@InvestopediaAgent.on_query(model=InvestopediaRequest, replies={InvestopediaResponse})
-async def query_handler(ctx: Context, sender: str, msg: InvestopediaRequest):
-    try:
-        response = generate_response(msg.query)
-        ctx.logger.info(response)
-        await ctx.send(sender, InvestopediaResponse(answer=str(response)))
-    except Exception as e:
-        err_msg = f"Error: {e}"
-        ctx.logger.info(err_msg)
-        ctx.logger.info(msg.query)
-
-if __name__ == "__main__":
-    InvestopediaAgent.run()
+    return answer, sources

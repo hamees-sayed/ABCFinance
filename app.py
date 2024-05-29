@@ -2,6 +2,8 @@ import pandas as pd
 import asyncio
 import base64
 import json
+import re
+import ast
 import streamlit as st
 from uagents.query import query
 from uagents import Model
@@ -16,12 +18,23 @@ def run_async(coro):
     loop.run_until_complete(coro)
     loop.close()
 
-investopedia_address="agent1qt45kuf6etamqgaklauz375g2l5fyymyg53kt0vkrlhjxlgsfdvhy2sju29"
+news_address="agent1qwxadkq8qx7yhx6g50y60egm6ywvae2x94q3avashqkuccmznnzmya6s87x"
+data_address="agent1qvznfjymt64fgajmh97nefvzfyx6z4hu9nz5nca0kh2rcmdaqjjd5u90pyk"
 
-class InvestopediaRequest(Model):
+loop = asyncio.new_event_loop()
+asyncio.set_event_loop(loop)
+
+class NewsRequest(Model):
     query: str
 
-class InvestopediaResponse(Model):
+class NewsResponse(Model):
+    answer: str
+
+class DataRequest(Model):
+    query: str
+    df: str
+
+class DataResponse(Model):
     answer: str
 
 def intro():
@@ -65,7 +78,7 @@ def intro():
     st.info("We appreciate your engagement! Please note, this project at its current state does not support conversational memory, we are working on it. Thank you for your understanding.")
     
 
-async def investopedia_agent():
+def investopedia_agent():
     if "messages" not in st.session_state:
         st.session_state.messages = []
 
@@ -76,20 +89,16 @@ async def investopedia_agent():
     if prompt := st.chat_input("Ask me questions about Financial Topics 🧑‍🏫"):
         st.chat_message("user").markdown(prompt)
         st.session_state.messages.append({"role": "user", "content": prompt})
-        response = await query(destination=investopedia_address, message=InvestopediaRequest(query=prompt), timeout=15.0)
-        data = json.loads(response.decode_payload())
-        decoded_response = data['answer']
-        print(decoded_response)
-        st.write(decoded_response)
-        # with st.chat_message("assistant"):
-        #     st.markdown(answer)
-        #     st.markdown("References:")
-        #     for key, value in sources.items():
-        #         st.link_button(key, value)
-        # st.session_state.messages.append({"role": "assistant", "content": decoded_response})
-            
+        response, sources = generate_response(prompt)
+        with st.chat_message("assistant"):
+            st.markdown(response)
+            st.markdown("References:")
+            for key, value in sources.items():
+                st.link_button(key, value)
+        st.session_state.messages.append({"role": "assistant", "content": response})
 
-def data_analysis_agent():
+
+async def data_analysis_agent():
     st.title('Data Analysis Agent')
 
     csv_file = st.file_uploader('Upload a CSV file', type=['csv'])
@@ -101,36 +110,43 @@ def data_analysis_agent():
         if st.button('Generate'):
             if prompt:
                 with st.spinner('Thinking...'):
-                    response = generate_data_analyst_response(prompt, df)
-                    if response != "/workspaces/ABCFinance/exports/charts/temp_chart.png":
-                        st.success(response)
-                    st.set_option('deprecation.showPyplotGlobalUse', False)
-                    st.pyplot()
+                    response = await query(destination=data_address, message=DataRequest(query=prompt, df=repr(df.to_csv())), timeout=15.0)
+                    data = json.loads(response.decode_payload())["answer"]
+                    st.write(data)
+                    # if response != "/workspaces/ABCFinance/exports/charts/temp_chart.png":
+                    #     st.success(response)
+                    # st.set_option('deprecation.showPyplotGlobalUse', False)
+                    # st.pyplot()
             else:
                 st.warning('Please enter a prompt')
 
 
-def news_agent():
+async def news_agent():
     st.title('News Agent')
 
     prompt = st.text_area("Latest news on financial topics, e.g 'Stock Trends', 'Finance News'", value="Finance India")
     if st.button('Generate'):
         if prompt:
             with st.spinner('Thinking...'):
-                response = generate_news(prompt)
-                for result in response:
+                response = await query(destination=news_address, message=NewsRequest(query=prompt), timeout=15.0)
+                data = json.loads(response.decode_payload())["answer"]
+                response_data = ast.literal_eval(data)
+                for result in response_data:
                     st.write(f"**{result['title']}**")
                     st.image(result['urlToImage'], 300)
                     st.write(summarise_news(result['content']))
                     st.markdown(f"[{result['source']['name']}]({result['url']}), {convert_date(result['publishedAt'])}")
                     st.markdown("---")
+
+async def stocks_agent():
+    pass
     
     
 if __name__ == '__main__':
     page_names_to_funcs = {
         "—": intro,
         "Investopedia Agent 🧑‍🏫": investopedia_agent,
-        "Stocks Agent 💹": "mapping_demo",
+        "Stocks Agent 💹": stocks_agent,
         "Data Analysis Agent 📊": data_analysis_agent,
         "News Agent 📰": news_agent,
     }
