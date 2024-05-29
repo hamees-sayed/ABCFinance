@@ -12,3 +12,4 @@ langchain-google-genai
 sentence-transformers
 newsapi-python
 uagents
+chromadb

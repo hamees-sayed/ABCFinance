@@ -1,26 +1,21 @@
 import os
 from serpapi import GoogleSearch
 import google.generativeai as genai
-from qdrant_client import QdrantClient
+import chromadb
 from sentence_transformers import SentenceTransformer
 
-client = QdrantClient(path="vec.db")
+client = chromadb.PersistentClient(path="agents.db")
 encoder = SentenceTransformer("all-MiniLM-L6-v2", device="cuda")
+
+nse_client = client.get_collection("nse")
+ndq_client = client.get_collection("ndq")
 
 def get_ticker(query: str):
     query_vector = encoder.encode(query).tolist()
-    ndq = client.search(
-                collection_name="ndq",
-                query_vector=query_vector,
-                limit=1
-            )[0]
-    nse = client.search(
-                collection_name="nse",
-                query_vector=query_vector,
-                limit=1
-            )[0]
-    
-    if ndq.score>nse.score:
+    ndq = ndq_client.query(query_texts=query, n_results=1)
+    nse = nse_client.query(query_texts=query, n_results=1)
+
+    if ndq.get('distances')[0]>nse.get('distances')[0]:
         return ndq.payload["Symbol"]+":NASDAQ"
     else:
         return nse.payload["SYMBOL"]+":NSE"    
