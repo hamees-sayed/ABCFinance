@@ -13,4 +13,5 @@ sentence-transformers
 newsapi-python
 uagents
 faiss-cpu
-chromadb==0.3.29
+chromadb
+sqlite>=3.35.0
