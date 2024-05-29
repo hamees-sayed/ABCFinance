@@ -1,10 +1,9 @@
 import os
 import requests
 from dotenv import load_dotenv
-from newsapi import NewsApiClient
 from langchain.chains.llm import LLMChain
 from langchain.prompts import PromptTemplate
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta
 from langchain_google_genai import ChatGoogleGenerativeAI
 from uagents import Agent, Model, Context
 from uagents.setup import fund_agent_if_low

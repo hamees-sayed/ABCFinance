@@ -9,7 +9,7 @@ from uagents.query import query
 from uagents import Model
 from investopedia_agent import generate_response
 from data_analyst_agent import generate_data_analyst_response
-from news_agent import generate_news, summarise_news, convert_date
+from news_agent import summarise_news, convert_date
 
 def run_async(coro):
     """Helper function to run an asyncio coroutine in Streamlit."""
@@ -19,7 +19,7 @@ def run_async(coro):
     loop.close()
 
 news_address="agent1qwxadkq8qx7yhx6g50y60egm6ywvae2x94q3avashqkuccmznnzmya6s87x"
-data_address="agent1qvznfjymt64fgajmh97nefvzfyx6z4hu9nz5nca0kh2rcmdaqjjd5u90pyk"
+
 
 loop = asyncio.new_event_loop()
 asyncio.set_event_loop(loop)
@@ -28,13 +28,6 @@ class NewsRequest(Model):
     query: str
 
 class NewsResponse(Model):
-    answer: str
-
-class DataRequest(Model):
-    query: str
-    df: str
-
-class DataResponse(Model):
     answer: str
 
 def intro():
@@ -110,13 +103,11 @@ async def data_analysis_agent():
         if st.button('Generate'):
             if prompt:
                 with st.spinner('Thinking...'):
-                    response = await query(destination=data_address, message=DataRequest(query=prompt, df=repr(df.to_csv())), timeout=15.0)
-                    data = json.loads(response.decode_payload())["answer"]
-                    st.write(data)
-                    # if response != "/workspaces/ABCFinance/exports/charts/temp_chart.png":
-                    #     st.success(response)
-                    # st.set_option('deprecation.showPyplotGlobalUse', False)
-                    # st.pyplot()
+                    response = generate_data_analyst_response(prompt, df)
+                    if response != "/speech/advait/ABCFinance/exports/charts/temp_chart.png":
+                        st.success(response)
+                    st.set_option('deprecation.showPyplotGlobalUse', False)
+                    st.pyplot()
             else:
                 st.warning('Please enter a prompt')
 
