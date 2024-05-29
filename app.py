@@ -1,9 +1,28 @@
 import pandas as pd
+import asyncio
+import base64
+import json
 import streamlit as st
+from uagents.query import query
+from uagents import Model
 from investopedia_agent import generate_response
 from data_analyst_agent import generate_data_analyst_response
 from news_agent import generate_news, summarise_news, convert_date
 
+def run_async(coro):
+    """Helper function to run an asyncio coroutine in Streamlit."""
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    loop.run_until_complete(coro)
+    loop.close()
+
+investopedia_address="agent1qt45kuf6etamqgaklauz375g2l5fyymyg53kt0vkrlhjxlgsfdvhy2sju29"
+
+class InvestopediaRequest(Model):
+    query: str
+
+class InvestopediaResponse(Model):
+    answer: str
 
 def intro():
     import streamlit as st
@@ -46,7 +65,7 @@ def intro():
     st.info("We appreciate your engagement! Please note, this project at its current state does not support conversational memory, we are working on it. Thank you for your understanding.")
     
 
-def investopedia_agent():
+async def investopedia_agent():
     if "messages" not in st.session_state:
         st.session_state.messages = []
 
@@ -57,13 +76,17 @@ def investopedia_agent():
     if prompt := st.chat_input("Ask me questions about Financial Topics 🧑‍🏫"):
         st.chat_message("user").markdown(prompt)
         st.session_state.messages.append({"role": "user", "content": prompt})
-        response, sources = generate_response(prompt)
-        with st.chat_message("assistant"):
-            st.markdown(response)
-            st.markdown("References:")
-            for key, value in sources.items():
-                st.link_button(key, value)
-        st.session_state.messages.append({"role": "assistant", "content": response})
+        response = await query(destination=investopedia_address, message=InvestopediaRequest(query=prompt), timeout=15.0)
+        data = json.loads(response.decode_payload())
+        decoded_response = data['answer']
+        print(decoded_response)
+        st.write(decoded_response)
+        # with st.chat_message("assistant"):
+        #     st.markdown(answer)
+        #     st.markdown("References:")
+        #     for key, value in sources.items():
+        #         st.link_button(key, value)
+        # st.session_state.messages.append({"role": "assistant", "content": decoded_response})
             
 
 def data_analysis_agent():
@@ -113,5 +136,10 @@ if __name__ == '__main__':
     }
 
     demo_name = st.sidebar.selectbox("Choose a demo", page_names_to_funcs.keys())
-    page_names_to_funcs[demo_name]()
+    selected_demo = page_names_to_funcs[demo_name]
+    if asyncio.iscoroutinefunction(selected_demo):
+        run_async(selected_demo())
+    else:
+        selected_demo()
+
 
