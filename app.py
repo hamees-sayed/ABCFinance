@@ -16,7 +16,7 @@ from data_analyst_agent import generate_data_analyst_response
 from news_agent import summarise_news, convert_date
 from stocks_agent import stock_agent
 
-subprocess.Popen(["python", "agent.py"])
+subprocess.Popen(["python", "news_agent.py"])
 
 def run_async(coro):
     """Helper function to run an asyncio coroutine in Streamlit."""
