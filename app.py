@@ -7,6 +7,7 @@ import base64
 import json
 import re
 import ast
+import subprocess
 import streamlit as st
 from uagents.query import query
 from uagents import Model
@@ -14,6 +15,8 @@ from investopedia_agent import generate_response
 from data_analyst_agent import generate_data_analyst_response
 from news_agent import summarise_news, convert_date
 from stocks_agent import stock_agent
+
+subprocess.Popen(["python", "agent.py"])
 
 def run_async(coro):
     """Helper function to run an asyncio coroutine in Streamlit."""
