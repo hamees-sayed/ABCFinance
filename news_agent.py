@@ -75,9 +75,9 @@ def convert_date(date_str):
 
 NewsAgent = Agent(
     name="NewsAgent",
-    seed="News Agent",
     port=8000,
-    endpoint=["https://abcfinance.onrender.com/submit"]
+    seed="News Agent",
+    endpoint=["http://127.0.0.1:8000/submit"]
 )
 
 fund_agent_if_low(NewsAgent.wallet.address())
